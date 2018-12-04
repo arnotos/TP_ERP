@@ -5,14 +5,15 @@ package ihm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import dao.ChefDeProjet;
 import dao.Developper;
 import dao.Personne;
 import dao.Projet;
+import services.PersonneManager;
 import services.ProjetManager;
+import services.ServicesManager;
 
 /**
  * @author Arnaud
@@ -20,9 +21,9 @@ import services.ProjetManager;
  */
 public class EntryPoint {
 	
-	public static Calendar dateDebutSimulation =null;
-	public static Calendar dateFinDev =null;
-	public static Calendar dateFinGestionProjet =null;
+	public static Calendar dateDebutSimulation;
+	public static Calendar dateFinDev;
+	public static Calendar dateFinGestionProjet;
 	
 	//var globale d'efficience globale à la simulation (1 = 100%)
 	public static double efficienceGlobale = 1;
@@ -78,6 +79,9 @@ public class EntryPoint {
 		System.out.println("\n");
 	}
 	/**
+	 * 
+	 * MAIN DU PROJET : interface console
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -87,6 +91,9 @@ public class EntryPoint {
 		
 		//init des managers
 		ProjetManager projetManager = new ProjetManager();
+		PersonneManager personneManager = new PersonneManager();
+		ServicesManager servicesManager = new ServicesManager();
+		
 		//init de l'équipe 
 		initEquipe(lesPersonnes);
 		//init les projets

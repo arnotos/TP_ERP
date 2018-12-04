@@ -7,3 +7,65 @@ Le pdg est inutile.
 Les dev sont interchangeable 
 La gestion de projet est tout au long du projet
 on prend l’ordre des projets en fonction de la date. 
+
+
+************
+
+Le PSEUDO CODE :
+
+Initialisation
+
+dev1
+dev2
+responsable technique
+chef projet
+
+date de départ
+date de fin dev = date de départ
+date de fin gestion = date de départ
+
+Projet A
+Projet B
+Projet C
+Projet D
+
+Efficience
+
+----
+
+Mettre tous les projets dans une liste. [A,B,C,D]
+Trier la liste.
+Vérifier si plusieurs projet ont le même date de livrable.
+Mettre toutes les possibilités de combinaisons de projets dans une liste.
+(Si tous les projets on une date différentes on aura [[A,B,C,D]] sinon on aura par exemple [[A,B,C,D], [A,C,B,D], ...])
+
+Pour chaque liste de projet dans la liste de toutes les combinaisons :
+	Nb jour dev restant = Nb jour dev besoin dans le projet
+	Nb jour gestion restant = Nb jour gestion besoin dans le projet
+	Date tmp = Date fin dev
+	
+	//A mettre dans une fonction si on chaud
+	Tant que nb jour dev restant > 0 :
+		Si date tmp dev = Samedi ou dimanche :
+			rien
+		Sinon 
+			NB jour dev restant -= Calculer_force_travail_groupe(dev, date tmp dev) * efficience
+		date tmp dev += 1
+	
+	date fin dev = date tmp
+	Date tmp = Date fin gestion
+		
+	//La meme mais pour la gestion
+	Tant que nb jour gestion restant > 0 :
+		Si date tmp gestion = Samedi ou dimanche :
+			rien
+		Sinon 
+			NB jour gestion restant -= Calculer_force_travail_groupe(gestion, date tmp gestion) * efficience
+		date tmp gestion += 1
+		
+	date fin gestion = date tmp
+	
+	Vérifier date de fin dev < date de fin livrable
+	Vérifier date de fin gestion < date de fin livrable
+	Calculer le différentiel entre plus grande date de fin entre gestion et dev et la date de livrable
+	Afficher différence et tout le bordel

@@ -31,7 +31,7 @@ public abstract class Personne {
 	}
 	
 	public boolean calcFlagOp(){
-		if(dateOp.after(Calendar.getInstance())){
+		if(dateOp.after(Calendar.getInstance())){ //FIXME il faudra a terme utiliser une date de simulation (simuler une date actuelle)
 			op=false;
 		}else{
 			op=true;
