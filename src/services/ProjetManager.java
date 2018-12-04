@@ -16,7 +16,7 @@ public class ProjetManager {
 	
 	
 	/**
-	 * Tri des projets par odre croissant sur les date de fin attendu
+	 * Tri des projets par ordre croissant sur les dates de fin attendues
 	 * 
 	 * @param lesProjets
 	 */
@@ -29,6 +29,10 @@ public class ProjetManager {
 			}
 		});
 	}
+	
+	/**
+	 * Tri des projets par 
+	 */
 	
 	
 	

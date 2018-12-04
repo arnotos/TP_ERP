@@ -14,6 +14,14 @@ public abstract class Personne {
 	public static final Integer NB_MOIS_EMBAUCHE =3;
 	public static final Integer NB_MOIS_FORMATION =1;
 	
+	public Personne(String nomP)
+	{
+		nom=nomP;
+		dateOp = Calendar.getInstance();
+		op = true;
+		coutAuMois=0;
+		efficience=1;
+	}
 	public Personne(){
 		nom="sample personne";
 		dateOp = Calendar.getInstance();

@@ -10,18 +10,19 @@ public class Projet {
 	private int dureeGestionProjet;
 	private Calendar dateFinAttendu;
 	
-	public Projet(){
-		nom="sample constructor";
-		dureeDev=0;
-		dureeGestionProjet = 0;
-		dateFinAttendu = Calendar.getInstance();
+	public Projet(String nomP, int dureeDevP, int dureeGestionProjetP, Date dateFin){
+		this.dateFinAttendu = Calendar.getInstance();
+		this.dateFinAttendu.setTime(dateFin);
+		this.nom=nomP;
+		this.dureeDev=dureeDevP;
+		this.dureeGestionProjet = dureeGestionProjetP;
 	}
 	
 	public Projet(String name){
-		nom=name;
-		dureeDev=0;
-		dureeGestionProjet = 0;
-		dateFinAttendu = Calendar.getInstance();
+		this.nom=name;
+		this.dureeDev=0;
+		this.dureeGestionProjet = 0;
+		this.dateFinAttendu = Calendar.getInstance();
 	}
 
 	public String getNom() {
