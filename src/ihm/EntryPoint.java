@@ -28,6 +28,9 @@ public class EntryPoint {
 	
 
 	/**
+	 * 
+	 * MAIN DU PROJET : interface console
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
