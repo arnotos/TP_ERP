@@ -6,6 +6,7 @@ package ihm;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import dao.ChefDeProjet;
 import dao.Developper;
@@ -14,6 +15,7 @@ import dao.Projet;
 import services.PersonneManager;
 import services.ProjetManager;
 import services.ServicesManager;
+import services.PersonneManager.Poste;
 
 /**
  * @author Arnaud
@@ -28,7 +30,16 @@ public class EntryPoint {
 	//var globale d'efficience globale à la simulation (1 = 100%)
 	public static double efficienceGlobale = 1;
 	
-	public static void initProjets(ArrayList<Projet> projets) { //(String nomP, int dureeDevP, int dureeGestionProjetP, Date dateFin)
+	public static void initDate()
+	{
+		Calendar c = GregorianCalendar.getInstance();
+		c.set(2018,  Calendar.JUNE,  1);
+		dateDebutSimulation = c;
+		dateFinDev = c;
+		dateFinGestionProjet = c;
+	}
+	public static void initProjets(ArrayList<Projet> projets)
+	{ //(String nomP, int dureeDevP, int dureeGestionProjetP, Date dateFin)
 		Calendar c = GregorianCalendar.getInstance();
 		//Projet 1
 		c.set(2018,  Calendar.DECEMBER,  1);
@@ -88,12 +99,15 @@ public class EntryPoint {
 		//Listes des projets et des personnes de l'équipe
 		ArrayList<Projet> lesProjets = new ArrayList<Projet>();
 		ArrayList<Personne> lesPersonnes = new ArrayList<Personne>();
+		ArrayList<ArrayList<Projet>> lesCombinaisonsProjets = new ArrayList<>();
 		
 		//init des managers
 		ProjetManager projetManager = new ProjetManager();
 		PersonneManager personneManager = new PersonneManager();
 		ServicesManager servicesManager = new ServicesManager();
 		
+		//init des dates
+		initDate();
 		//init de l'équipe 
 		initEquipe(lesPersonnes);
 		//init les projets
@@ -115,6 +129,59 @@ public class EntryPoint {
 		projetManager.triProjetAuPlusTot(lesProjets);
 		System.out.println("Liste des projets triés : ____________________________________________________");
 		afficherProjets(lesProjets);
+		
+		//TODO lister toutes les combinaisons
+		lesCombinaisonsProjets.add(lesProjets);
+		
+		for (ArrayList<Projet> combinaisons : lesCombinaisonsProjets)
+		{
+			//Si plusieurs combinaison initialise
+			for(Projet projet : combinaisons)
+			{
+				int jourDevRestant = projet.getDureeDev();
+				int jourGestionRestant = projet.getDureeGestionProjet();
+				Calendar dateTmp = dateFinDev;
+				
+				while(jourDevRestant > 0)
+				{					
+					if(dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+					{
+						//Rien on travail pas.
+					}
+					else
+					{
+						jourDevRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.DEVELOPPER) * efficienceGlobale;
+					}
+					//Vérifier si ok
+					dateTmp.add(Calendar.DATE, 1);
+				}
+				
+				dateFinDev = dateTmp;
+				dateTmp = dateFinGestionProjet;
+				
+				while(jourGestionRestant > 0)
+				{					
+					if(dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+					{
+						//Rien on travail pas.
+					}
+					else
+					{
+						jourGestionRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.CHEF_DE_PROJET) * efficienceGlobale;
+					}
+					//Vérifier si ok
+					dateTmp.add(Calendar.DATE, 1);
+				}
+				
+				dateFinGestionProjet = dateTmp;
+				
+				System.out.println("Fin DEV : " + dateFinDev.getTime());
+				System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime());
+			}
+		}
+		
+		System.out.println("slt");
+		System.out.println(dateDebutSimulation.getTime());
 	}
 	
 
