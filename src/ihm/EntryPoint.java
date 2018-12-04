@@ -5,13 +5,14 @@ package ihm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import dao.ChefDeProjet;
 import dao.Developper;
 import dao.Personne;
 import dao.Projet;
+import services.PersonneManager;
 import services.ProjetManager;
+import services.ServicesManager;
 
 /**
  * @author Arnaud
@@ -41,6 +42,8 @@ public class EntryPoint {
 		
 		//init des managers
 		ProjetManager projetManager = new ProjetManager();
+		PersonneManager personneManager = new PersonneManager();
+		ServicesManager servicesManager = new ServicesManager();
 		
 		//On set la date de début simulation à l'instant t actuel.
 		Calendar calendar = Calendar.getInstance();
