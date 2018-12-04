@@ -8,6 +8,7 @@ import java.util.Map;
 import dao.ChefDeProjet;
 import dao.Developper;
 import dao.Personne;
+import ihm.EntryPoint;
 
 /**
  * Manager concernant le traitement des personnes
@@ -67,6 +68,10 @@ public class PersonneManager {
 		}
 		
 		return uniteForceTravail;
+	}
+	
+	public double getForceDeTravailCoeficient(List<Personne> lesPersonnes,Calendar calendar,Poste poste) {
+		return getForceDeTravail(lesPersonnes, calendar, poste)*EntryPoint.efficienceGlobale;
 	}
 
 }
