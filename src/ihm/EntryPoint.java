@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.spi.CalendarNameProvider;
 
 import dao.ChefDeProjet;
 import dao.Developper;
@@ -32,11 +33,12 @@ public class EntryPoint {
 	
 	public static void initDate()
 	{
-		Calendar c = GregorianCalendar.getInstance();
-		c.set(2018,  Calendar.JUNE,  1);
-		dateDebutSimulation = c;
-		dateFinDev = c;
-		dateFinGestionProjet = c;
+		Calendar c = new GregorianCalendar(2018, Calendar.JUNE, 1);
+		//Imposible de faire dateDebut = c.
+		//On doit utiliser .clone() pour c/c des dates.
+		dateDebutSimulation= (Calendar) c.clone();
+		dateFinDev= (Calendar) c.clone();
+		dateFinGestionProjet= (Calendar) c.clone();
 	}
 	public static void initProjets(ArrayList<Projet> projets)
 	{ //(String nomP, int dureeDevP, int dureeGestionProjetP, Date dateFin)
@@ -58,12 +60,12 @@ public class EntryPoint {
 	}
 	public static void initEquipe(ArrayList<Personne> equipe)
 	{
-		Developper dev1 = new Developper("William M."); //dev
-		Developper dev2 = new Developper("Antoine H."); //dev
-		Developper dev3 = new Developper("Arnaud L. "); //responsable technique
+		Developper dev1 = new Developper("William M.", dateDebutSimulation.getTime()); //dev
+		Developper dev2 = new Developper("Antoine H.", dateDebutSimulation.getTime()); //dev
+		Developper dev3 = new Developper("Arnaud L. ", dateDebutSimulation.getTime()); //responsable technique
 		
 		//init les chef de projet 
-		ChefDeProjet chefProjet1 = new ChefDeProjet("Victor L. ");
+		ChefDeProjet chefProjet1 = new ChefDeProjet("Victor L. ", dateDebutSimulation.getTime());
 		
 		//ajout des employés à la liste d'employés
 		equipe.add(dev1);
@@ -130,6 +132,7 @@ public class EntryPoint {
 		System.out.println("Liste des projets triés : ____________________________________________________");
 		afficherProjets(lesProjets);
 		
+		
 		//TODO lister toutes les combinaisons
 		lesCombinaisonsProjets.add(lesProjets);
 		
@@ -140,7 +143,7 @@ public class EntryPoint {
 			{
 				int jourDevRestant = projet.getDureeDev();
 				int jourGestionRestant = projet.getDureeGestionProjet();
-				Calendar dateTmp = dateFinDev;
+				Calendar dateTmp = (Calendar) dateFinDev.clone();
 				
 				while(jourDevRestant > 0)
 				{					
@@ -151,13 +154,14 @@ public class EntryPoint {
 					else
 					{
 						jourDevRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.DEVELOPPER) * efficienceGlobale;
+						System.out.println(dateTmp.get(Calendar.DAY_OF_WEEK) + " : " + jourDevRestant);
 					}
 					//Vérifier si ok
 					dateTmp.add(Calendar.DATE, 1);
 				}
 				
-				dateFinDev = dateTmp;
-				dateTmp = dateFinGestionProjet;
+				dateFinDev = (Calendar) dateTmp.clone();
+				dateTmp = (Calendar) dateFinGestionProjet.clone();
 				
 				while(jourGestionRestant > 0)
 				{					
@@ -173,15 +177,17 @@ public class EntryPoint {
 					dateTmp.add(Calendar.DATE, 1);
 				}
 				
-				dateFinGestionProjet = dateTmp;
+				dateFinGestionProjet = (Calendar) dateTmp.clone();
 				
+				System.out.println("Projet : " + projet.getNom());
 				System.out.println("Fin DEV : " + dateFinDev.getTime());
-				System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime());
+				System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime() + "\n\r");
 			}
 		}
 		
 		System.out.println("slt");
 		System.out.println(dateDebutSimulation.getTime());
+		System.out.println(dateDebutSimulation.get(Calendar.YEAR));
 	}
 	
 
