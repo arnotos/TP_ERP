@@ -12,6 +12,7 @@ import dao.Developper;
 import dao.Personne;
 import dao.Projet;
 import services.PersonneManager;
+import services.PersonneManager.Poste;
 import services.ProjetManager;
 import services.ServicesManager;
 
@@ -115,6 +116,14 @@ public class EntryPoint {
 		projetManager.triProjetAuPlusTot(lesProjets);
 		System.out.println("Liste des projets triés : ____________________________________________________");
 		afficherProjets(lesProjets);
+		
+		
+		//TEST de la méthode de force de travail
+		Calendar test = GregorianCalendar.getInstance();
+		test.clear();
+		test.set(2019,  Calendar.SEPTEMBER,  1);
+		System.out.println("----+"+personneManager.getForceDeTravail(lesPersonnes, test,Poste.DEVELOPPER));
+		System.out.println("----+"+personneManager.getForceDeTravail(lesPersonnes, test,Poste.CHEF_DE_PROJET));
 	}
 	
 

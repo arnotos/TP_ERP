@@ -44,20 +44,17 @@ public class PersonneManager {
 	public int getForceDeTravail(List<Personne> lesPersonnes,Calendar calendar,Poste poste){
 		int uniteForceTravail = 0;
 		
-		Calendar dateOp; // calendar d'unité de test
 		
 		for(Personne p: lesPersonnes){ // on traite toutes les personnes
 			if(poste.equals(Poste.DEVELOPPER)){ // on check quel type on veut traiter avant de poursuivre
-				dateOp = p.getDateOp();
-				if(!(calendar.before(dateOp))){  // évite de faire after true && isToday ==> l'inverse est si !=before
+				if(!(calendar.before(p.getDateOp()))){  // évite de faire after true && isToday ==> l'inverse est si !=before
 					if(p instanceof Developper){
 						uniteForceTravail = uniteForceTravail + 1;
 					}
 				}
 			}else{
 				if(poste.equals(Poste.CHEF_DE_PROJET)){
-					dateOp = p.getDateOp();
-					if(!(calendar.before(dateOp))){  // évite de faire after true && isToday ==> l'inverse est si !=before
+					if(!(calendar.before(p.getDateOp()))){  // évite de faire after true && isToday ==> l'inverse est si !=before
 						if(p instanceof ChefDeProjet){
 							uniteForceTravail = uniteForceTravail + 1;
 						}
