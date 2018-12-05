@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import dao.ChefDeProjet;
 import dao.Developper;
 import dao.Personne;
+import ihm.EntryPoint;
 
 /**
  * Manager concernant le traitement des personnes
@@ -65,5 +67,28 @@ public class PersonneManager {
 		
 		return uniteForceTravail;
 	}
+	
+	/**
+	 * Utilise la methode getForce de travail en associant le résultat au coefficient global
+	 * @param lesPersonnes
+	 * @param calendar
+	 * @param poste
+	 * @return
+	 */
+	public double getForceDeTravailCoeficient(List<Personne> lesPersonnes,Calendar calendar,Poste poste) {
+		return getForceDeTravail(lesPersonnes, calendar, poste)*EntryPoint.efficienceGlobale;
+	}
+	
+	/**
+	 * Affichage console de l'équipes
+	 * @param equipe
+	 */
+	public void afficherEquipe(ArrayList<Personne> equipe)
+	{
+		for(Personne p : equipe)
+			System.out.println(p.getNom() + " : " + p.getClass().toString().replaceAll("class dao.", ""));
+		System.out.println("\n");
+	}
+	
 
 }

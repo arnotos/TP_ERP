@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Developper extends Personne {
 
@@ -21,6 +22,10 @@ public class Developper extends Personne {
 	public Developper(String name) {
 		super();
 		nom=name;
+	}
+	
+	public Developper(String name, Date dateOp) {
+		super(name, dateOp);
 	}
 	
 	/**
