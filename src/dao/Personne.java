@@ -29,6 +29,15 @@ public abstract class Personne {
 		coutAuMois=0;
 		efficience=1;
 	}
+	public Personne(String nomP, Date dateOp)
+	{
+		nom=nomP;
+		this.dateOp = Calendar.getInstance();
+		this.dateOp.setTime(dateOp);
+		op = true;
+		coutAuMois=0;
+		efficience=1;		
+	}
 	
 	public boolean calcFlagOp(){
 		if(dateOp.after(Calendar.getInstance())){ //FIXME il faudra a terme utiliser une date de simulation (simuler une date actuelle)

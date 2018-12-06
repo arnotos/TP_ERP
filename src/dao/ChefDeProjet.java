@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.Date;
+
 public class ChefDeProjet extends Personne{
 
 	public ChefDeProjet() {
@@ -12,6 +14,10 @@ public class ChefDeProjet extends Personne{
 		super();
 		
 		nom=name;
+	}
+	
+	public ChefDeProjet(String name, Date dateOp) {
+		super(name, dateOp);
 	}
 	
 	

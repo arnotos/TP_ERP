@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -45,20 +46,17 @@ public class PersonneManager {
 	public int getForceDeTravail(List<Personne> lesPersonnes,Calendar calendar,Poste poste){
 		int uniteForceTravail = 0;
 		
-		Calendar dateOp; // calendar d'unité de test
 		
 		for(Personne p: lesPersonnes){ // on traite toutes les personnes
 			if(poste.equals(Poste.DEVELOPPER)){ // on check quel type on veut traiter avant de poursuivre
-				dateOp = p.getDateOp();
-				if(!(calendar.before(dateOp))){  // évite de faire after true && isToday ==> l'inverse est si !=before
+				if(!(calendar.before(p.getDateOp()))){  // évite de faire after true && isToday ==> l'inverse est si !=before
 					if(p instanceof Developper){
 						uniteForceTravail = uniteForceTravail + 1;
 					}
 				}
 			}else{
 				if(poste.equals(Poste.CHEF_DE_PROJET)){
-					dateOp = p.getDateOp();
-					if(!(calendar.before(dateOp))){  // évite de faire after true && isToday ==> l'inverse est si !=before
+					if(!(calendar.before(p.getDateOp()))){  // évite de faire after true && isToday ==> l'inverse est si !=before
 						if(p instanceof ChefDeProjet){
 							uniteForceTravail = uniteForceTravail + 1;
 						}
@@ -70,8 +68,27 @@ public class PersonneManager {
 		return uniteForceTravail;
 	}
 	
+	/**
+	 * Utilise la methode getForce de travail en associant le résultat au coefficient global
+	 * @param lesPersonnes
+	 * @param calendar
+	 * @param poste
+	 * @return
+	 */
 	public double getForceDeTravailCoeficient(List<Personne> lesPersonnes,Calendar calendar,Poste poste) {
 		return getForceDeTravail(lesPersonnes, calendar, poste)*EntryPoint.efficienceGlobale;
 	}
+	
+	/**
+	 * Affichage console de l'équipes
+	 * @param equipe
+	 */
+	public void afficherEquipe(ArrayList<Personne> equipe)
+	{
+		for(Personne p : equipe)
+			System.out.println(p.getNom() + " : " + p.getClass().toString().replaceAll("class dao.", ""));
+		System.out.println("\n");
+	}
+	
 
 }
