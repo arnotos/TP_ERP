@@ -26,8 +26,7 @@ public class EntryPoint {
 	public static Calendar dateFinGestionProjet;
 	
 	//var globale d'efficience globale à la simulation (1 = 100%)
-	public static double efficienceGlobale = 1;
-	
+	public static double efficienceGlobale = 0.8;
 	
 	/* METHODES INIT utilisée dans le main juste en dessous */
 	//TODO a terme déplacer les inits dans le ServiceManager
@@ -42,9 +41,10 @@ public class EntryPoint {
 	}
 	
 	public static void initProjets(ArrayList<Projet> projets)
-	{ //(String nomP, int dureeDevP, int dureeGestionProjetP, Date dateFin)
+	{
 		Calendar c = GregorianCalendar.getInstance();
 		//Projet 1
+		c.clear();
 		c.set(2018,  Calendar.DECEMBER,  1);
 		Projet pro1 = new Projet("AIRBUS   ", 150, 40, c.getTime());
 		projets.add(pro1);
@@ -64,7 +64,7 @@ public class EntryPoint {
 	{
 		Developper dev1 = new Developper("William M.", dateDebutSimulation.getTime()); //dev
 		Developper dev2 = new Developper("Antoine H.", dateDebutSimulation.getTime()); //dev
-		Developper dev3 = new Developper("Arnaud L. ", dateDebutSimulation.getTime()); //responsable technique
+		Developper dev3 = new Developper("Arnaud L. ", dateDebutSimulation.getTime()); //dev
 		
 		//init les chef de projet 
 		ChefDeProjet chefProjet1 = new ChefDeProjet("Victor L. ", dateDebutSimulation.getTime());
@@ -76,6 +76,15 @@ public class EntryPoint {
 		equipe.add(chefProjet1);
 	}
 	
+	//TODO à mettre dans une classe
+	public static long differenceBetweenToCalendar(Calendar calExpected, Calendar calEnd)
+	{
+		long millisExpected = calExpected.getTimeInMillis();
+		long millisEnd = calEnd.getTimeInMillis();
+		long diff = millisExpected - millisEnd;
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+		return diffDays;
+	}
 	
 	
 	/**
@@ -131,9 +140,11 @@ public class EntryPoint {
 			//Si plusieurs combinaison initialise
 			for(Projet projet : combinaisons)
 			{
-				int jourDevRestant = projet.getDureeDev();
-				int jourGestionRestant = projet.getDureeGestionProjet();
+				int jourDevRestant = projet.getDureeDev(efficienceGlobale);
+				int jourGestionRestant = projet.getDureeGestionProjet(efficienceGlobale);
 				Calendar dateTmp = (Calendar) dateFinDev.clone();
+				System.out.println(jourDevRestant);
+				System.out.println(jourGestionRestant);
 				
 				while(jourDevRestant > 0)
 				{					
@@ -143,8 +154,8 @@ public class EntryPoint {
 					}
 					else
 					{
-						jourDevRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.DEVELOPPER) * efficienceGlobale;
-						System.out.println(dateTmp.get(Calendar.DAY_OF_WEEK) + " : " + jourDevRestant);
+						jourDevRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.DEVELOPPER);
+						//System.out.println(jourDevRestant);
 					}
 					//Vérifier si ok
 					dateTmp.add(Calendar.DATE, 1);
@@ -161,7 +172,7 @@ public class EntryPoint {
 					}
 					else
 					{
-						jourGestionRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.CHEF_DE_PROJET) * efficienceGlobale;
+						jourGestionRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.CHEF_DE_PROJET);
 					}
 					//Vérifier si ok
 					dateTmp.add(Calendar.DATE, 1);
@@ -171,7 +182,11 @@ public class EntryPoint {
 				
 				System.out.println("Projet : " + projet.getNom());
 				System.out.println("Fin DEV : " + dateFinDev.getTime());
-				System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime() + "\n\r");
+				System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime());
+				long diff = differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
+				System.out.println("Avance/Retard : " + diff + " jours");
+				System.out.println();
+				
 			}
 		}
 		
