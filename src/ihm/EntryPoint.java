@@ -53,16 +53,16 @@ public class EntryPoint {
 		c.set(2018,  Calendar.SEPTEMBER,  1);
 		Projet pro2 = new Projet("NINETENDO", 75, 25, c.getTime());
 		projets.add(pro2);
-		//Projet 3
-		c.clear();
-		c.set(2019,  Calendar.JANUARY,  1);
-		Projet pro3 = new Projet("HTC VR   ", 150, 45, c.getTime());
-		projets.add(pro3);
 		//Projet 4
 		c.clear();
 		c.set(2019,  Calendar.JANUARY,  1);
 		Projet pro4 = new Projet("Soni ", 300, 80, c.getTime());
 		projets.add(pro4);
+		//Projet 3
+		c.clear();
+		c.set(2019,  Calendar.JANUARY,  1);
+		Projet pro3 = new Projet("HTC VR   ", 150, 45, c.getTime());
+		projets.add(pro3);
 	}
 	
 	public static void initEquipe(ArrayList<Personne> equipe)
@@ -102,7 +102,7 @@ public class EntryPoint {
 		//Listes des projets et des personnes de l'équipe
 		ArrayList<Projet> lesProjets = new ArrayList<Projet>();
 		ArrayList<Personne> lesPersonnes = new ArrayList<Personne>();
-		ArrayList<ArrayList<Projet>> lesCombinaisonsProjets = new ArrayList<>();
+		//ArrayList<ArrayList<Projet>> lesCombinaisonsProjets = new ArrayList<>();
 		
 		//init des managers
 		ProjetManager projetManager = new ProjetManager();
@@ -133,75 +133,61 @@ public class EntryPoint {
 		//si 2 livrables pour la meme dates ( on test tt les combinaisons différentes)
 		//Après résultat
 		projetManager.triProjetAuPlusTot(lesProjets);
+		lesProjets = projetManager.sortProjectWithSameEndDate(lesProjets);
 		System.out.println("Liste des projets triés : ____________________________________________________");
 		projetManager.afficherProjets(lesProjets);
 		
+		//lesCombinaisonsProjets.add(lesProjets);
 		
-		//TODO lister toutes les combinaisons
-		ArrayList<ArrayList<Projet>> zz = projetManager.getAllPossibilities(lesProjets);
-		
-		/*for (ArrayList<Projet> arrayList : zz) {
-			for (Projet projet : arrayList) {
-				System.out.println(projet.getNom());
-			}
-			System.out.println("-");
-		}*/
-		
-		lesCombinaisonsProjets.add(lesProjets);
-		
-		for (ArrayList<Projet> combinaisons : lesCombinaisonsProjets)
+		for(Projet projet : lesProjets)
 		{
-			//Si plusieurs combinaison initialise
-			for(Projet projet : combinaisons)
-			{
-				int jourDevRestant = projet.getDureeDev(efficienceGlobale);
-				int jourGestionRestant = projet.getDureeGestionProjet(efficienceGlobale);
-				Calendar dateTmp = (Calendar) dateFinDev.clone();
-				System.out.println(jourDevRestant);
-				System.out.println(jourGestionRestant);
-				
-				while(jourDevRestant > 0)
-				{					
-					if(dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-					{
-						//Rien on travail pas.
-					}
-					else
-					{
-						jourDevRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.DEVELOPPER);
-						//System.out.println(jourDevRestant);
-					}
-					//Vérifier si ok
-					dateTmp.add(Calendar.DATE, 1);
+			int jourDevRestant = projet.getDureeDev(efficienceGlobale);
+			int jourGestionRestant = projet.getDureeGestionProjet(efficienceGlobale);
+			Calendar dateTmp = (Calendar) dateFinDev.clone();
+			System.out.println(jourDevRestant);
+			System.out.println(jourGestionRestant);
+			
+			while(jourDevRestant > 0)
+			{					
+				if(dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+				{
+					//Rien on travail pas.
 				}
-				
-				dateFinDev = (Calendar) dateTmp.clone();
-				dateTmp = (Calendar) dateFinGestionProjet.clone();
-				
-				while(jourGestionRestant > 0)
-				{					
-					if(dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-					{
-						//Rien on travail pas.
-					}
-					else
-					{
-						jourGestionRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.CHEF_DE_PROJET);
-					}
-					//Vérifier si ok
-					dateTmp.add(Calendar.DATE, 1);
+				else
+				{
+					jourDevRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.DEVELOPPER);
+					//System.out.println(jourDevRestant);
 				}
-				
-				dateFinGestionProjet = (Calendar) dateTmp.clone();
-				
-				System.out.println("Projet : " + projet.getNom());
-				System.out.println("Fin DEV : " + dateFinDev.getTime());
-				System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime());
-				long diff = differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
-				System.out.println("Avance/Retard : " + diff + " jours");
-				System.out.println();
-				
+				//Vérifier si ok
+				dateTmp.add(Calendar.DATE, 1);
 			}
+			
+			dateFinDev = (Calendar) dateTmp.clone();
+			dateTmp = (Calendar) dateFinGestionProjet.clone();
+			
+			while(jourGestionRestant > 0)
+			{					
+				if(dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || dateTmp.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+				{
+					//Rien on travail pas.
+				}
+				else
+				{
+					jourGestionRestant -= personneManager.getForceDeTravail(lesPersonnes, dateTmp, Poste.CHEF_DE_PROJET);
+				}
+				//Vérifier si ok
+				dateTmp.add(Calendar.DATE, 1);
+			}
+			
+			dateFinGestionProjet = (Calendar) dateTmp.clone();
+			
+			System.out.println("Projet : " + projet.getNom());
+			System.out.println("Fin DEV : " + dateFinDev.getTime());
+			System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime());
+			long diff = differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
+			System.out.println("Avance/Retard : " + diff + " jours");
+			System.out.println();
+			
 		}
 		
 		System.out.println(dateDebutSimulation.getTime());

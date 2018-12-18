@@ -40,76 +40,32 @@ public class ProjetManager {
 		});
 	}
 	
-	public ArrayList<ArrayList<Projet>> getAllPossibilities(List<Projet> lesProjets)
+	public ArrayList<Projet> sortProjectWithSameEndDate(ArrayList<Projet> lesProjets)
 	{
-		/*ArrayList<ArrayList<Projet>> allPossibilities = new ArrayList<>();
-		ArrayList<ArrayList<Projet>> allEqualsCombinaisons = new ArrayList<>();
-		ArrayList<Projet> equalProject = new ArrayList<>();
-		int startingEqual = 0;
-		Boolean isEqual = false;
+		int size = lesProjets.size();
+		Projet p1 = null;
+		Projet p2 = null;
 		
-		
-		for(int i = 0 ; i <= lesProjets.size() ; i++)
+		for(int i = 0 ; i < size ; i++)
 		{
-			
-			if(!lesProjets.get(i).getDateFinAttendu().equals(lesProjets.get(i + 1)))
+			for(int j = i + 1 ; j < size; j++)
 			{
-				
-				if(isEqual = true)
+				p1 = lesProjets.get(i);
+				p2 = lesProjets.get(j);
+				if(p1.getDateFinAttendu().equals(p2.getDateFinAttendu()))
 				{
-					equalProject.clear();
-					for(int j = startingEqual ; j <= i ; j++)
+					//Ils ont la même date de fin
+					if((p2.getDureeDev() <= p1.getDureeDev() && p2.getDureeDev() <= p1.getDureeGestionProjet()) ||
+					   (p2.getDureeGestionProjet() <= p1.getDureeDev() && p2.getDureeGestionProjet() <= p1.getDureeGestionProjet()))
 					{
-						equalProject.add(lesProjets.get(j));
+						lesProjets.set(i, p2);
+						lesProjets.set(j, p1);
 					}
-					
-					allEqualsCombinaisons = get
 				}
-				
-				for (ArrayList<Projet> possibility : allPossibilities)
-				{
-					possibility.add(lesProjets.get(i));
-				}
-				isEqual = false;
 			}
-			else if(lesProjets.get(i).getDateFinAttendu().equals(lesProjets.get(i + 1)))
-			{
-				isEqual = true;
-				startingEqual = i;
-			}
-			
 		}
 		
-		return allPossibilities;*/
-
-		ArrayList<Integer> listzz = new ArrayList<>();
-		listzz.add(1);
-		listzz.add(2);
-		listzz.add(3);
-		//listzz.add(4);
-		recursif(listzz, "");
-		return null;
-	}
-	
-	private void recursif(ArrayList<Integer> listProject, String chaine)
-	{
-		ArrayList<Integer> listRemoved = new ArrayList<>();
-		for(int i = 0 ; i <= listProject.size() - 1; i++)
-		{
-			listRemoved.clear();
-			for (Integer integer : listProject)
-			{
-				listRemoved.add(integer);
-			}
-			listRemoved.remove(i);
-			
-			recursif(listRemoved, chaine + listProject.get(i));
-		}
-		
-		if(listRemoved.isEmpty() && listProject.size() == 0)
-		{
-			System.out.println(chaine);
-		}
+		return lesProjets;
 	}
 	
 	/**
