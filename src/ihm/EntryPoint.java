@@ -58,6 +58,11 @@ public class EntryPoint {
 		c.set(2019,  Calendar.JANUARY,  1);
 		Projet pro3 = new Projet("HTC VR   ", 150, 45, c.getTime());
 		projets.add(pro3);
+		//Projet 4
+		c.clear();
+		c.set(2019,  Calendar.JANUARY,  1);
+		Projet pro4 = new Projet("Soni ", 300, 80, c.getTime());
+		projets.add(pro4);
 	}
 	
 	public static void initEquipe(ArrayList<Personne> equipe)
@@ -133,6 +138,15 @@ public class EntryPoint {
 		
 		
 		//TODO lister toutes les combinaisons
+		ArrayList<ArrayList<Projet>> zz = projetManager.getAllPossibilities(lesProjets);
+		
+		/*for (ArrayList<Projet> arrayList : zz) {
+			for (Projet projet : arrayList) {
+				System.out.println(projet.getNom());
+			}
+			System.out.println("-");
+		}*/
+		
 		lesCombinaisonsProjets.add(lesProjets);
 		
 		for (ArrayList<Projet> combinaisons : lesCombinaisonsProjets)
@@ -190,10 +204,7 @@ public class EntryPoint {
 			}
 		}
 		
-		System.out.println("slt");
 		System.out.println(dateDebutSimulation.getTime());
 		System.out.println(dateDebutSimulation.get(Calendar.YEAR));
 	}
-	
-
 }
