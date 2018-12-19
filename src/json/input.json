@@ -1,47 +1,68 @@
 {
 	"situation1" : {
 		"project" : [
-			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"AIRBUS   ","dureeDev":150,"dureeGestionProjet":40,"dateFinAttendu":{"year":2018,"month":11,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"HTC VR   ","dureeDev":150,"dureeGestionProjet":45,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}}
+			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1}},
+			{"nom":"AIRBUS   ","dureeDev":150,"dureeGestionProjet":40,"dateFinAttendu":{"year":2018,"month":11,"dayOfMonth":1}},
+			{"nom":"HTC VR   ","dureeDev":150,"dureeGestionProjet":45,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1}}
 		],
-		"employee" : [
-			{"nom":"William M.","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Antoine H.","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Arnaud L. ","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Victor L. ","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0}
+		"developper" : [
+			{"nom":"William M.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
+			{"nom":"Antoine H.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
+			{"nom":"Arnaud L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
 		],
-		"efficiency" : 1.0
+		"projectManager" : [
+			{"nom":"Victor L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
+		],
+		"efficiency" : 1.0,
+		"dateStartSimulation" : {"year":2018, "month":5, "dayOfMonth":1}
 	},
 	"situation2" : {
 		"project" : [
-			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"AIRBUS   ","dureeDev":150,"dureeGestionProjet":40,"dateFinAttendu":{"year":2018,"month":11,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"Soni ","dureeDev":300,"dureeGestionProjet":80,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"HTC VR   ","dureeDev":150,"dureeGestionProjet":45,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}}
+			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1}},
+			{"nom":"AIRBUS   ","dureeDev":150,"dureeGestionProjet":40,"dateFinAttendu":{"year":2018,"month":11,"dayOfMonth":1}},
+			{"nom":"Soni ","dureeDev":300,"dureeGestionProjet":80,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1}},
+			{"nom":"HTC VR   ","dureeDev":150,"dureeGestionProjet":45,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1}}
 		],
-		"employee" : [
-			{"nom":"William M.","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Antoine H.","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Arnaud L. ","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Victor L. ","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0}
+		"developper" : [
+			{"nom":"William M.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
+			{"nom":"Antoine H.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
+			{"nom":"Arnaud L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
 		],
-		"efficiency" : 0.8
+		"projectManager" : [
+			{"nom":"Victor L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
+		],
+		"efficiency" : 0.8,
+		"dateStartSimulation" : {"year":2018, "month":5, "dayOfMonth":1}
 	},
 	"situation3" : {
 		"project" : [
-			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"AIRBUS   ","dureeDev":150,"dureeGestionProjet":40,"dateFinAttendu":{"year":2018,"month":11,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"HTC VR   ","dureeDev":150,"dureeGestionProjet":45,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}},
-			{"nom":"Soni ","dureeDev":300,"dureeGestionProjet":80,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0}}
+			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1}},
+			{"nom":"AIRBUS   ","dureeDev":150,"dureeGestionProjet":40,"dateFinAttendu":{"year":2018,"month":11,"dayOfMonth":1}},
+			{"nom":"Soni ","dureeDev":300,"dureeGestionProjet":80,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1}},
+			{"nom":"HTC VR   ","dureeDev":150,"dureeGestionProjet":45,"dateFinAttendu":{"year":2019,"month":0,"dayOfMonth":1}}
 		],
-		"employee" : [
-			{"nom":"William M.","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Antoine H.","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Arnaud L. ","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0},
-			{"nom":"Victor L. ","op":true,"dateOp":{"year":2018,"month":5,"dayOfMonth":1,"hourOfDay":0,"minute":0,"second":0},"coutAuMois":0,"efficience":1.0}
+		"developper" : [
+			{"nom":"William M.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
+			{"nom":"Antoine H.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
+			{"nom":"Arnaud L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
 		],
-		"efficiency" : 1.0
+		"projectManager" : [
+			{"nom":"Victor L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
+		],
+		"efficiency" : 1.0,
+		"dateStartSimulation" : {"year":2018, "month":5, "dayOfMonth":1}
 	},
-	"test" : "yolo"
+	"situationLibre" : {
+		"project" : [
+			{"nom":"NINETENDO","dureeDev":75,"dureeGestionProjet":25,"dateFinAttendu":{"year":2018,"month":8,"dayOfMonth":1}}
+		],
+		"developper" : [
+			{"nom":"William M.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
+		],
+		"projectManager" : [
+			{"nom":"Victor L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}}
+		],
+		"efficiency" : 1.0,
+		"dateStartSimulation" : {"year":2018, "month":5, "dayOfMonth":1}
+	}
 }

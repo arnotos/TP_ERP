@@ -47,10 +47,7 @@ public class Developper extends Personne {
 			dateOp=c;
 			
 			//process qui met en place via méthode le bool opérationnel
-			calcFlagOp();
+			//calcFlagOp();
 		}
 	}
-	
-	
-
 }

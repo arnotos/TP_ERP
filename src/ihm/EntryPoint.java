@@ -5,6 +5,7 @@ package ihm;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
@@ -15,6 +16,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 import javax.xml.ws.Response;
 
@@ -22,6 +26,7 @@ import dao.ChefDeProjet;
 import dao.Developper;
 import dao.Personne;
 import dao.Projet;
+import services.JSonManager;
 import services.PersonneManager;
 import services.PersonneManager.Poste;
 import services.ProjetManager;
@@ -38,59 +43,17 @@ public class EntryPoint {
 	public static Calendar dateFinGestionProjet;
 	
 	//var globale d'efficience globale à la simulation (1 = 100%)
-	public static double efficienceGlobale = 0.8;
+	public static double efficienceGlobale = 1;
 	
 	/* METHODES INIT utilisée dans le main juste en dessous */
 	//TODO a terme déplacer les inits dans le ServiceManager
-	public static void initDate()
+	public static void initDate(Calendar c)
 	{
-		Calendar c = new GregorianCalendar(2018, Calendar.JUNE, 1);
 		//Imposible de faire dateDebut = c.
 		//On doit utiliser .clone() pour c/c des dates.
 		dateDebutSimulation= (Calendar) c.clone();
 		dateFinDev= (Calendar) c.clone();
 		dateFinGestionProjet= (Calendar) c.clone();
-	}
-	
-	public static void initProjets(ArrayList<Projet> projets)
-	{
-		Calendar c = GregorianCalendar.getInstance();
-		//Projet 1
-		c.clear();
-		c.set(2018,  Calendar.DECEMBER,  1);
-		Projet pro1 = new Projet("AIRBUS   ", 150, 40, c.getTime());
-		projets.add(pro1);
-		//Projet 2
-		c.clear();
-		c.set(2018,  Calendar.SEPTEMBER,  1);
-		Projet pro2 = new Projet("NINETENDO", 75, 25, c.getTime());
-		projets.add(pro2);
-		//Projet 4
-		c.clear();
-		c.set(2019,  Calendar.JANUARY,  1);
-		Projet pro4 = new Projet("Soni ", 300, 80, c.getTime());
-		projets.add(pro4);
-		//Projet 3
-		c.clear();
-		c.set(2019,  Calendar.JANUARY,  1);
-		Projet pro3 = new Projet("HTC VR   ", 150, 45, c.getTime());
-		projets.add(pro3);
-	}
-	
-	public static void initEquipe(ArrayList<Personne> equipe)
-	{
-		Developper dev1 = new Developper("William M.", dateDebutSimulation.getTime()); //dev
-		Developper dev2 = new Developper("Antoine H.", dateDebutSimulation.getTime()); //dev
-		Developper dev3 = new Developper("Arnaud L. ", dateDebutSimulation.getTime()); //dev
-		
-		//init les chef de projet 
-		ChefDeProjet chefProjet1 = new ChefDeProjet("Victor L. ", dateDebutSimulation.getTime());
-		
-		//ajout des employés à la liste d'employés
-		equipe.add(dev1);
-		equipe.add(dev2);
-		equipe.add(dev3);
-		equipe.add(chefProjet1);
 	}
 	
 	//TODO à mettre dans une classe
@@ -103,20 +66,6 @@ public class EntryPoint {
 		return diffDays;
 	}
 	
-	public static void json_reader() throws FileNotFoundException
-	{	
-		Gson gson = new Gson();
-		File jsonFile = Paths.get("C:\\Users\\William\\Documents\\travail\\TpERP\\TP_ERP\\src\\json\\input.json").toFile();
-		JsonObject jsonObject = gson.fromJson(new FileReader(jsonFile), JsonObject.class);
-
-		//JsonArray nom = jsonObject.get("situation1").getAsJsonArray();
-		JsonObject zz = jsonObject.getAsJsonObject("situation1");
-		JsonArray zzarray = zz.getAsJsonArray("project");
-		
-		System.out.println(zzarray.size());
-		System.out.println(zzarray.get(0));
-	}
-	
 	/**
 	 * 
 	 * MAIN DU PROJET : interface console
@@ -127,19 +76,52 @@ public class EntryPoint {
 		//Listes des projets et des personnes de l'équipe
 		ArrayList<Projet> lesProjets = new ArrayList<Projet>();
 		ArrayList<Personne> lesPersonnes = new ArrayList<Personne>();
-		//ArrayList<ArrayList<Projet>> lesCombinaisonsProjets = new ArrayList<>();
 		
 		//init des managers
 		ProjetManager projetManager = new ProjetManager();
 		PersonneManager personneManager = new PersonneManager();
 		ServicesManager servicesManager = new ServicesManager();
+		JSonManager jsonManager = new JSonManager();
 		
-		//init des dates
-		initDate();
-		//init de l'équipe 
-		initEquipe(lesPersonnes);
-		//init les projets
-		initProjets(lesProjets);
+		Map<String, Object> jsonInput = new HashMap<String, Object>();
+		
+		System.out.println("Veuillez choisir le fichier à charger : ");
+		System.out.println("	1 - La situation numéro 1");
+		System.out.println("	2 - La situation numéro 2");
+		System.out.println("	3 - La situation numéro 3");
+		System.out.println("	4 - La situation libre\n\r");
+		
+		Scanner reader = new Scanner(System.in);
+		System.out.print("Numéro : ");
+		int choice = reader.nextInt();
+		reader.close();
+		
+		if(choice < 1 || choice > 4)
+		{
+			System.out.println("Mauvais numéro. Fin de la simulation.");
+			System.exit(0);
+		}
+		
+		try {
+			jsonInput = jsonManager.jsonReader(choice);
+			
+	        for(String key: jsonInput.keySet())
+	        {
+	        	if(key == "Projects")
+	        		lesProjets = (ArrayList<Projet>) jsonInput.get(key);
+	        	else if(key == "Personnes")
+	        		lesPersonnes = (ArrayList<Personne>) jsonInput.get(key);
+	        	else if(key == "Efficience")
+	        		efficienceGlobale = (double) jsonInput.get(key);
+	        	else if(key == "DateStartSimulation")
+	        		initDate((Calendar) jsonInput.get(key));
+	        	
+	        }			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
 		
 		projetManager.afficherDatesProjets(lesProjets);
 		
@@ -161,16 +143,6 @@ public class EntryPoint {
 		lesProjets = projetManager.sortProjectWithSameEndDate(lesProjets);
 		System.out.println("Liste des projets triés : ____________________________________________________");
 		projetManager.afficherProjets(lesProjets);
-		
-		Gson gson = new Gson();
-		String ee = gson.toJson(lesPersonnes);
-		try {
-			json_reader();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(ee);
 		
 		for(Projet projet : lesProjets)
 		{
