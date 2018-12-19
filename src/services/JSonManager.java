@@ -12,7 +12,6 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dao.ChefDeProjet;
@@ -37,7 +36,8 @@ public class JSonManager {
 		String situation = jsonSituationFromChoice(choice);
 		Gson gson = new Gson();
 		//En dure pour le moment à changer plus tard
-		File jsonFile = Paths.get("C:\\Users\\wmuller\\Documents\\Cours\\ERP\\TPE3\\TP-ERP-JAVA\\TP_ERP\\src\\json\\input.json").toFile();
+		String path = new File("src/json/input.json").getAbsolutePath();
+		File jsonFile = Paths.get(path).toFile();
 		JsonObject jsonObject = gson.fromJson(new FileReader(jsonFile), JsonObject.class);
 		JsonObject jsonSituation = jsonObject.getAsJsonObject(situation);
 		JsonArray jsonProject = jsonSituation.getAsJsonArray("project");

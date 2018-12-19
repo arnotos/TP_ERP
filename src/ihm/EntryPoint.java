@@ -3,27 +3,14 @@
  */
 package ihm;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.xml.ws.Response;
-
-import dao.ChefDeProjet;
-import dao.Developper;
 import dao.Personne;
 import dao.Projet;
 import services.JSonManager;
@@ -32,10 +19,7 @@ import services.PersonneManager.Poste;
 import services.ProjetManager;
 import services.ServicesManager;
 
-/**
- * @author Arnaud
- *
- */
+
 public class EntryPoint {
 	
 	public static Calendar dateDebutSimulation;
@@ -44,9 +28,9 @@ public class EntryPoint {
 	
 	//var globale d'efficience globale à la simulation (1 = 100%)
 	public static double efficienceGlobale = 1;
+	public static SimpleDateFormat formatDateDisplay = new SimpleDateFormat("dd MMMM yyyy");
 	
 	/* METHODES INIT utilisée dans le main juste en dessous */
-	//TODO a terme déplacer les inits dans le ServiceManager
 	public static void initDate(Calendar c)
 	{
 		//Imposible de faire dateDebut = c.
@@ -54,16 +38,6 @@ public class EntryPoint {
 		dateDebutSimulation= (Calendar) c.clone();
 		dateFinDev= (Calendar) c.clone();
 		dateFinGestionProjet= (Calendar) c.clone();
-	}
-	
-	//TODO à mettre dans une classe
-	public static long differenceBetweenToCalendar(Calendar calExpected, Calendar calEnd)
-	{
-		long millisExpected = calExpected.getTimeInMillis();
-		long millisEnd = calEnd.getTimeInMillis();
-		long diff = millisExpected - millisEnd;
-		long diffDays = diff / (24 * 60 * 60 * 1000);
-		return diffDays;
 	}
 	
 	/**
@@ -125,7 +99,6 @@ public class EntryPoint {
 		
 		projetManager.afficherDatesProjets(lesProjets);
 		
-		
 		//Affichage titre
 		servicesManager.afficherTitre();
 		//Présentation de l'équipe
@@ -137,8 +110,6 @@ public class EntryPoint {
 		projetManager.afficherProjets(lesProjets);
 		
 		//trie des projets par date de livrable au plus tot
-		//si 2 livrables pour la meme dates ( on test tt les combinaisons différentes)
-		//Après résultat
 		projetManager.triProjetAuPlusTot(lesProjets);
 		lesProjets = projetManager.sortProjectWithSameEndDate(lesProjets);
 		System.out.println("Liste des projets triés : ____________________________________________________");
@@ -149,8 +120,6 @@ public class EntryPoint {
 			int jourDevRestant = projet.getDureeDev(efficienceGlobale);
 			int jourGestionRestant = projet.getDureeGestionProjet(efficienceGlobale);
 			Calendar dateTmp = (Calendar) dateFinDev.clone();
-			System.out.println(jourDevRestant);
-			System.out.println(jourGestionRestant);
 			
 			while(jourDevRestant > 0)
 			{					
@@ -187,9 +156,9 @@ public class EntryPoint {
 			dateFinGestionProjet = (Calendar) dateTmp.clone();
 			
 			System.out.println("Projet : " + projet.getNom());
-			System.out.println("Fin DEV : " + dateFinDev.getTime());
-			System.out.println("Fin GESTION : " + dateFinGestionProjet.getTime());
-			long diff = differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
+			System.out.println("Fin DEV : " + formatDateDisplay.format(dateFinDev.getTime()));
+			System.out.println("Fin GESTION : " + formatDateDisplay.format(dateFinGestionProjet.getTime()));
+			long diff = servicesManager.differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
 			System.out.println("Avance/Retard : " + diff + " jours");
 			System.out.println();
 			

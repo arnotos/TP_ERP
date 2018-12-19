@@ -1,9 +1,6 @@
 package services;
 
-import java.util.ArrayList;
-
-import dao.Personne;
-import dao.Projet;
+import java.util.Calendar;
 
 /**
  * Manager concernant les traitements divers
@@ -23,9 +20,14 @@ public class ServicesManager {
 		System.out.println("\n");
 	}
 	
-	
-	
-	
-	
+	//TODO à mettre dans une classe
+	public long differenceBetweenToCalendar(Calendar calExpected, Calendar calEnd)
+	{
+		long millisExpected = calExpected.getTimeInMillis();
+		long millisEnd = calEnd.getTimeInMillis();
+		long diff = millisExpected - millisEnd;
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+		return diffDays;
+	}
 	
 }

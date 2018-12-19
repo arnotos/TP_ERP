@@ -1,18 +1,9 @@
 package services;
 
-import java.lang.reflect.Array;
-import java.rmi.dgc.Lease;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.print.attribute.standard.ReferenceUriSchemesSupported;
-
-import org.w3c.dom.ls.LSInput;
-
 import dao.Projet;
 
 /**
