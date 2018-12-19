@@ -3,9 +3,21 @@
  */
 package ihm;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import javax.xml.ws.Response;
+
 import dao.ChefDeProjet;
 import dao.Developper;
 import dao.Personne;
@@ -91,6 +103,19 @@ public class EntryPoint {
 		return diffDays;
 	}
 	
+	public static void json_reader() throws FileNotFoundException
+	{	
+		Gson gson = new Gson();
+		File jsonFile = Paths.get("C:\\Users\\William\\Documents\\travail\\TpERP\\TP_ERP\\src\\json\\input.json").toFile();
+		JsonObject jsonObject = gson.fromJson(new FileReader(jsonFile), JsonObject.class);
+
+		//JsonArray nom = jsonObject.get("situation1").getAsJsonArray();
+		JsonObject zz = jsonObject.getAsJsonObject("situation1");
+		JsonArray zzarray = zz.getAsJsonArray("project");
+		
+		System.out.println(zzarray.size());
+		System.out.println(zzarray.get(0));
+	}
 	
 	/**
 	 * 
@@ -137,7 +162,15 @@ public class EntryPoint {
 		System.out.println("Liste des projets triés : ____________________________________________________");
 		projetManager.afficherProjets(lesProjets);
 		
-		//lesCombinaisonsProjets.add(lesProjets);
+		Gson gson = new Gson();
+		String ee = gson.toJson(lesPersonnes);
+		try {
+			json_reader();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(ee);
 		
 		for(Projet projet : lesProjets)
 		{
