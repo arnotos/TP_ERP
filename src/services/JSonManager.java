@@ -1,8 +1,11 @@
 package services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,14 +34,19 @@ public class JSonManager {
 			return "situationLibre";
 	}
 	
-	public static Map<String, Object> jsonReader(int choice) throws FileNotFoundException
+	public Map<String, Object> jsonReader(int choice) throws FileNotFoundException
 	{	
 		String situation = jsonSituationFromChoice(choice);
 		Gson gson = new Gson();
 		//En dure pour le moment à changer plus tard
-		String path = new File("src/json/input.json").getAbsolutePath();
-		File jsonFile = Paths.get(path).toFile();
-		JsonObject jsonObject = gson.fromJson(new FileReader(jsonFile), JsonObject.class);
+		//String path = new File("src/json/input.json").getAbsolutePath();
+		//File jsonFile = Paths.get(path).toFile();
+		//JsonObject jsonObject = gson.fromJson(new FileReader(jsonFile), JsonObject.class);
+		
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream("json/input.json");
+		InputStreamReader reader = new InputStreamReader(in);
+		JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+
 		JsonObject jsonSituation = jsonObject.getAsJsonObject(situation);
 		JsonArray jsonProject = jsonSituation.getAsJsonArray("project");
 		JsonArray jsonDev = jsonSituation.getAsJsonArray("developper");
