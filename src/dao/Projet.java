@@ -45,15 +45,7 @@ public class Projet {
 	//Permet de calculer d'obtenir la durée du projet avec l'efficience
 	public int calculDureeEfficience(int duree, double efficience)
 	{
-		/*Exemple avec 40 jours et efficience 0,75
-		 * coeff = 40 * 0,75 => 30
-		 * diff = 40 - 30 => 10
-		 * dureeEffic = 40 + 10 => 50 jours
-		 */
-		double coeff = duree * efficience;
-		double diff = duree - coeff;
-		int dureeDevEfficience = (int) Math.round(duree + diff);
-		return dureeDevEfficience;
+		return (int) Math.round(duree/efficience);
 	}
 
 	public void setDureeDev(int dureeDev) {

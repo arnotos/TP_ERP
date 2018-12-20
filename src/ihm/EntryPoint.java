@@ -63,14 +63,15 @@ public class EntryPoint {
 		System.out.println("	1 - La situation numéro 1");
 		System.out.println("	2 - La situation numéro 2");
 		System.out.println("	3 - La situation numéro 3");
-		System.out.println("	4 - La situation libre\n\r");
+		System.out.println("	4 - La situation numéro 4");
+		System.out.println("	5 - La situation libre\n\r");
 		
 		Scanner reader = new Scanner(System.in);
 		System.out.print("Numéro : ");
 		int choice = reader.nextInt();
 		reader.close();
 		
-		if(choice < 1 || choice > 4)
+		if(choice < 1 || choice > 5)
 		{
 			System.out.println("Mauvais numéro. Fin de la simulation.");
 			System.exit(0);
@@ -120,6 +121,9 @@ public class EntryPoint {
 			int jourDevRestant = projet.getDureeDev(efficienceGlobale);
 			int jourGestionRestant = projet.getDureeGestionProjet(efficienceGlobale);
 			Calendar dateTmp = (Calendar) dateFinDev.clone();
+			System.out.println("Projet : " + projet.getNom());
+			System.out.println("Jours de développement avec prise en compte de l'efficience : " + jourDevRestant);
+			System.out.println("Jours de gestion de projets avec prise en compte de l'efficience : " + jourGestionRestant);
 			
 			while(jourDevRestant > 0)
 			{					
@@ -155,16 +159,21 @@ public class EntryPoint {
 			
 			dateFinGestionProjet = (Calendar) dateTmp.clone();
 			
-			System.out.println("Projet : " + projet.getNom());
 			System.out.println("Fin DEV : " + formatDateDisplay.format(dateFinDev.getTime()));
 			System.out.println("Fin GESTION : " + formatDateDisplay.format(dateFinGestionProjet.getTime()));
-			long diff = servicesManager.differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
+			
+			long diff = 0;
+			
+			if(dateFinGestionProjet.after(dateFinDev))
+			{
+				diff = servicesManager.differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinGestionProjet);
+			}else{
+				diff = servicesManager.differenceBetweenToCalendar(projet.getDateFinAttendu(), dateFinDev);
+			}
+			
 			System.out.println("Avance/Retard : " + diff + " jours");
 			System.out.println();
 			
 		}
-		
-		System.out.println(dateDebutSimulation.getTime());
-		System.out.println(dateDebutSimulation.get(Calendar.YEAR));
 	}
 }

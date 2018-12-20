@@ -25,7 +25,7 @@ public class JSonManager {
 	//No need constructor
 	public static String jsonSituationFromChoice(int choice)
 	{
-		if(choice >= 1 && choice <= 3)
+		if(choice >= 1 && choice <= 4)
 			return "situation" + choice;
 		else
 			return "situationLibre";
