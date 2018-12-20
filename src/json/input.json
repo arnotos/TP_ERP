@@ -65,13 +65,14 @@
 			{"nom":"William M.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
 			{"nom":"Antoine H.","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
 			{"nom":"Arnaud L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
-			{"nom":"A Embaucher 1","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}},
-			{"nom":"A Embaucher 2","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}},
-			{"nom":"A Embaucher 3","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}}
+			{"nom":"Dev à embaucher 1","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}},
+			{"nom":"Dev à embaucher 2","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}},
+			{"nom":"Dev à embaucher 3","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}},
+			{"nom":"Dev à embaucher 4","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}}
 		],
 		"projectManager" : [
 			{"nom":"Victor L. ","dateEmbauche":{"year":2018,"month":1,"dayOfMonth":1}},
-			{"nom":"A Embaucher 4","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}}
+			{"nom":"Gestionnaire à embaucher 1","dateEmbauche":{"year":2018,"month":5,"dayOfMonth":1}}
 		],
 		"efficiency" : 1.0,
 		"dateStartSimulation" : {"year":2018, "month":5, "dayOfMonth":1}
