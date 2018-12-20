@@ -60,11 +60,11 @@ public class EntryPoint {
 		Map<String, Object> jsonInput = new HashMap<String, Object>();
 		
 		System.out.println("Veuillez choisir le fichier à charger : ");
-		System.out.println("	1 - La situation numéro 1");
-		System.out.println("	2 - La situation numéro 2");
-		System.out.println("	3 - La situation numéro 3");
-		System.out.println("	4 - La situation numéro 4");
-		System.out.println("	5 - La situation libre\n\r");
+		System.out.println("	1 - Situation permettant de répondre aux questions A et B");
+		System.out.println("	2 - Situation permettant de répondre à la question C");
+		System.out.println("	3 - Situation permettant de répondre à la question D");
+		System.out.println("	4 - Situation permettant de répondre à la question E");
+		System.out.println("	5 - Situation libre\n\r");
 		
 		Scanner reader = new Scanner(System.in);
 		System.out.print("Numéro : ");
